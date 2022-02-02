@@ -1,4 +1,19 @@
-import { Box, Button, Checkbox, Flex, Icon, Table, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Flex,
+  Icon,
+  Table,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  useBreakpointValue,
+} from "@chakra-ui/react";
+import Link from "next/link";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 
 import { Header } from "../../components/Header";
@@ -11,7 +26,7 @@ export default function UserList() {
     base: false,
     lg: true,
   });
-  
+
   return (
     <Box>
       <Header />
@@ -22,15 +37,25 @@ export default function UserList() {
         <Box flex="1" borderRadius={8} bg="gray.800" p="8">
           <Flex mb="8" justify="space-between" align="center">
             <Heading>Usuários</Heading>
-            <Button as="a" size="sm" fontSize="sm" colorScheme="pink" lineHeight="0" leftIcon={<Icon as={RiAddLine} fontSize="20" />}>
-              Criar novo
-            </Button>
+
+            <Link href="/users/create" passHref>
+              <Button
+                as="a"
+                size="sm"
+                fontSize="sm"
+                colorScheme="pink"
+                lineHeight="0"
+                leftIcon={<Icon as={RiAddLine} fontSize="20" />}
+              >
+                Criar novo
+              </Button>
+            </Link>
           </Flex>
 
           <Table colorScheme="whiteAlpha">
             <Thead>
               <Tr>
-                <Th px={["4", "4", "6"]} color="gray.300" w="8" >
+                <Th px={["4", "4", "6"]} color="gray.300" w="8">
                   <Checkbox colorScheme="pink" />
                 </Th>
                 <Th>Usuários</Th>
@@ -45,11 +70,12 @@ export default function UserList() {
                 <Td>
                   <Box>
                     <Text fontWeight="bold">Fernanda Marcilio</Text>
-                    <Text fontSize="sm" color="gray.300">fernandas.marcilio@gmail.com</Text>
+                    <Text fontSize="sm" color="gray.300">
+                      fernandas.marcilio@gmail.com
+                    </Text>
                   </Box>
                 </Td>
                 {isWideScreenVersion && <Td>04 de Abril, 2021</Td>}
-
               </Tr>
 
               <Tr>
@@ -59,11 +85,12 @@ export default function UserList() {
                 <Td>
                   <Box>
                     <Text fontWeight="bold">Fernanda Marcilio</Text>
-                    <Text fontSize="sm" color="gray.300">fernandas.marcilio@gmail.com</Text>
+                    <Text fontSize="sm" color="gray.300">
+                      fernandas.marcilio@gmail.com
+                    </Text>
                   </Box>
                 </Td>
                 {isWideScreenVersion && <Td>04 de Abril, 2021</Td>}
-
               </Tr>
 
               <Tr>
@@ -73,11 +100,12 @@ export default function UserList() {
                 <Td>
                   <Box>
                     <Text fontWeight="bold">Fernanda Marcilio</Text>
-                    <Text fontSize="sm" color="gray.300">fernandas.marcilio@gmail.com</Text>
+                    <Text fontSize="sm" color="gray.300">
+                      fernandas.marcilio@gmail.com
+                    </Text>
                   </Box>
                 </Td>
                 {isWideScreenVersion && <Td>04 de Abril, 2021</Td>}
-
               </Tr>
             </Tbody>
           </Table>
