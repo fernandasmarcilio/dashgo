@@ -35,6 +35,7 @@ export function Header() {
           aria-label="Abrir menu"
           onClick={onOpen}
           mr="2"
+          display="inline-flex"
         />
       )}
 
