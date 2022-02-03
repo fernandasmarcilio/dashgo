@@ -29,7 +29,22 @@ export default function UserList() {
     const response = await fetch("http://localhost:3000/api/users");
     const data = await response.json();
 
-    return data;
+    const users = data.users.map(user => {
+      const { id, name, email, createdAt } = user;
+
+      return {
+        id,
+        name,
+        email,
+        createdAt: new Date(createdAt).toLocaleDateString('pt-BR', {
+          day: '2-digit',
+          month: 'long',
+          year: 'numeric',
+        })
+      }
+    })
+
+    return users;
   });
 
   const isWideScreenVersion = useBreakpointValue({
@@ -85,57 +100,28 @@ export default function UserList() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  <Tr>
-                    <Td px={["4", "4", "6"]}>
-                      <Checkbox colorScheme="pink" />
-                    </Td>
-                    <Td>
-                      <Box>
-                        <Text fontWeight="bold">Fernanda Marcilio</Text>
-                        <Text fontSize="sm" color="gray.300">
-                          fernandas.marcilio@gmail.com
-                        </Text>
-                      </Box>
-                    </Td>
-                    {isWideScreenVersion && <Td>04 de Abril, 2021</Td>}
-                  </Tr>
-
-                  <Tr>
-                    <Td px={["4", "4", "6"]}>
-                      <Checkbox colorScheme="pink" />
-                    </Td>
-                    <Td>
-                      <Box>
-                        <Text fontWeight="bold">Fernanda Marcilio</Text>
-                        <Text fontSize="sm" color="gray.300">
-                          fernandas.marcilio@gmail.com
-                        </Text>
-                      </Box>
-                    </Td>
-                    {isWideScreenVersion && <Td>04 de Abril, 2021</Td>}
-                  </Tr>
-
-                  <Tr>
-                    <Td px={["4", "4", "6"]}>
-                      <Checkbox colorScheme="pink" />
-                    </Td>
-                    <Td>
-                      <Box>
-                        <Text fontWeight="bold">Fernanda Marcilio</Text>
-                        <Text fontSize="sm" color="gray.300">
-                          fernandas.marcilio@gmail.com
-                        </Text>
-                      </Box>
-                    </Td>
-                    {isWideScreenVersion && <Td>04 de Abril, 2021</Td>}
-                  </Tr>
+                  {data.map((user) => (
+                    <Tr key={user.id}>
+                      <Td px={["4", "4", "6"]}>
+                        <Checkbox colorScheme="pink" />
+                      </Td>
+                      <Td>
+                        <Box>
+                          <Text fontWeight="bold">{user.name}</Text>
+                          <Text fontSize="sm" color="gray.300">
+                            {user.email}
+                          </Text>
+                        </Box>
+                      </Td>
+                      {isWideScreenVersion && <Td>{user.createdAt}</Td>}
+                    </Tr>
+                  ))}
                 </Tbody>
               </Table>
 
               <Pagination />
             </>
           )}
-          
         </Box>
       </Flex>
     </Box>
