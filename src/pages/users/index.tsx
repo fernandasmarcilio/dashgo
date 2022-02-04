@@ -4,6 +4,7 @@ import {
   Checkbox,
   Flex,
   Icon,
+  Link,
   Spinner,
   Table,
   Tbody,
@@ -14,7 +15,7 @@ import {
   Tr,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import Link from "next/link";
+import NextLink from "next/link";
 import { useState } from "react";
 import { RiAddLine } from "react-icons/ri";
 
@@ -22,7 +23,9 @@ import { Header } from "../../components/Header";
 import { Heading } from "../../components/Heading";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
+import { api } from "../../services/api";
 import { useUsers } from "../../services/hooks/useUsers";
+import { queryClient } from "../../services/queryClient";
 
 export default function UserList() {
   const [ page, setPage ] = useState(1);
@@ -32,6 +35,16 @@ export default function UserList() {
     base: false,
     lg: true,
   });
+
+  async function handlePrefetchUser(userId: number) {
+    await queryClient.prefetchQuery(["users", userId], async () => {
+      const response = await api.get(`users/${userId}`)
+
+      return response.data;
+    }, {
+      staleTime: 1000 * 60 * 10, // 10 minutes
+    })
+  }
 
   return (
     <Box>
@@ -47,7 +60,7 @@ export default function UserList() {
               { !isLoading && isFetching  && <Spinner size="sm" color="gray.500" ml="4" />}
             </Heading>
 
-            <Link href="/users/create" passHref>
+            <NextLink href="/users/create" passHref>
               <Button
                 as="a"
                 size="sm"
@@ -58,7 +71,7 @@ export default function UserList() {
               >
                 Criar novo
               </Button>
-            </Link>
+            </NextLink>
           </Flex>
 
           {isLoading ? (
@@ -91,7 +104,9 @@ export default function UserList() {
                       </Td>
                       <Td>
                         <Box>
-                          <Text fontWeight="bold">{user.name}</Text>
+                          <Link onMouseEnter={() => handlePrefetchUser(Number(user.id))}>
+                            <Text fontWeight="bold">{user.name}</Text>
+                          </Link>
                           <Text fontSize="sm" color="gray.300">
                             {user.email}
                           </Text>
