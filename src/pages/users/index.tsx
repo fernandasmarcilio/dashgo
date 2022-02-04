@@ -31,6 +31,13 @@ export default function UserList() {
   const [ page, setPage ] = useState(1);
   const { data, isLoading, isFetching, error } = useUsers(page)
 
+
+  // EXEMPLO SSR NO REACT QUERY -> AO RECEBER O users DA PROPS 
+
+  // const { data, isLoading, isFetching, error } = useUsers(page, {
+  //   initialData: users,
+  // })
+
   const isWideScreenVersion = useBreakpointValue({
     base: false,
     lg: true,
@@ -112,7 +119,7 @@ export default function UserList() {
                           </Text>
                         </Box>
                       </Td>
-                      {isWideScreenVersion && <Td>{user.createdAt}</Td>}
+                      {isWideScreenVersion && <Td>{user.created_at}</Td>}
                     </Tr>
                   ))}
                 </Tbody>
@@ -130,3 +137,15 @@ export default function UserList() {
     </Box>
   );
 }
+
+// EXEMPLO COM SSR NO REACT QUERY
+
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   const { users, totalCount } = await getUsers(1)
+
+//   return {
+//     props: {
+//       users,
+//     }
+//   }
+// }

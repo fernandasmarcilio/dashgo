@@ -5,7 +5,7 @@ type User = {
   id: string;
   name: string;
   email: string;
-  createdAt: string;
+  created_at: string;
 }
 
 type GetUsersResponse = {
@@ -23,13 +23,13 @@ export async function getUsers(page: number): Promise<GetUsersResponse> {
   const totalCount = Number(headers['x-total-count'])
 
   const users = data.users.map((user: User) => {
-    const { id, name, email, createdAt } = user;
+    const { id, name, email, created_at } = user;
 
     return {
       id,
       name,
       email,
-      createdAt: new Date(createdAt).toLocaleDateString('pt-BR', {
+      created_at: new Date(created_at).toLocaleDateString('pt-BR', {
         day: '2-digit',
         month: 'long',
         year: 'numeric',
@@ -44,5 +44,15 @@ export async function getUsers(page: number): Promise<GetUsersResponse> {
 export function useUsers(page: number) {
   return useQuery(["users", page], () => getUsers(page), {
     staleTime: 1000 * 60 * 10, // 10 minutes
-  });
+  })
 }
+
+
+// EXEMPLO SSR NO REACT QUERY
+
+// export function useUsers(page: number, options: UseQueryOptions) {
+//   return useQuery(["users", page], () => getUsers(page), {
+//     staleTime: 1000 * 60 * 10, // 10 minutes
+//     ...options,
+//   })
+// }
