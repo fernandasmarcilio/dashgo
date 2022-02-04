@@ -17,7 +17,7 @@ export function makeServer() {
     // fabrica de dados 
     factories: {
       user: Factory.extend({
-        name(index) {
+        name() {
           return faker.name.findName();
         },
         email() {
@@ -31,7 +31,7 @@ export function makeServer() {
 
     // criação dos dados, para o user vai ser gerado 200 usuários
     seeds(server) {
-      server.createList('user', 200)
+      server.createList('user', 135)
     },
 
     routes() {
