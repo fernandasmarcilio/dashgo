@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   Box,
   Button,
@@ -16,7 +15,7 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { RiAddLine, RiPencilLine } from "react-icons/ri";
+import { RiAddLine } from "react-icons/ri";
 import { useQuery } from "react-query";
 
 import { Header } from "../../components/Header";
@@ -45,6 +44,8 @@ export default function UserList() {
     })
 
     return users;
+  }, {
+    staleTime: 1000 * 5, // 5 seconds
   });
 
   const isWideScreenVersion = useBreakpointValue({
